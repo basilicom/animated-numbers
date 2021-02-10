@@ -9,4 +9,12 @@ module.exports = {
     library: 'animated-numbers',
     libraryTarget: 'umd',
   },
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        loader: "babel-loader"
+      }
+    ]
+  }
 };

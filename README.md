@@ -19,5 +19,5 @@ npm install animated-numbers --save
 
 Assuming you use the package with a compiler, import it via:
 
-`import animatedNumbers from 'animated-numbers'`
+`import initAnimatedNumbers from 'animated-numbers'`
 

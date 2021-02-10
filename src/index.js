@@ -49,6 +49,7 @@ app.AnimatedNumbersBuilder = function () {
           .toString()
           .replace(/\B(?=(\d{3})+(?!\d))/g, ".");
         window.clearInterval(app.aninums[id].interval);
+        app.aninums[id].isInViewport = true;
       }
     }, app.aninums[id].delay);
   };
@@ -86,25 +87,35 @@ app.AnimatedNumbersBuilder = function () {
   arr.forEach((aninum, index) => {
     const numelem = aninum.querySelector(".animated-number_number_nr");
 
-
+    // assign an id to aninum if it has none
     if (aninum.id === "" || undefined) {
       aninum.id = "aninum_" + index;
     }
 
+    // populate aninum with animation properties
     app.aninums[aninum.id] = {
       interval: null,
       delay: animationProps(aninum).delay,
       step: animationProps(aninum).step,
       actnum: 0,
       maxnum: animationProps(aninum).maxnum,
-      negnum: animationProps(aninum).negnum
+      negnum: animationProps(aninum).negnum,
+      isInViewport: false
     };
 
-    // begin at 0 and count up
+    // set animated number to 0 and count up
     numelem.innerHTML = "0";
 
+    // perform animation if the aninum is within
+    // the viewport on initial page load
+    if (app.elementInViewport(aninum)) {
+      animateNumber(aninum.id);
+    }
+
+    // custom event definition
+    // if the aninum appears within the viewport
     aninum.addEventListener("inviewport", function () {
-      animateNumber(this.id);
+      animateNumber(aninum.id);
     });
   });
 }; // Window Scroll
@@ -122,6 +133,7 @@ app.WindowScrollBinder = function () {
           app.openanimations = true;
 
           if (app.elementInViewport(aninum)) {
+          // dispatch the given aninum's custom event
             aninum.dispatchEvent(app.events.inviewport);
           }
         }

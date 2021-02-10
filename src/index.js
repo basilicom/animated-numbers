@@ -28,15 +28,8 @@ app.elementInViewport = function (el) {
     top + height <= window.pageYOffset + window.innerHeight &&
     left + width <= window.pageXOffset + window.innerWidth
   ) {
-    console.log("element", el, "is in viewport!");
+    return true;
   }
-
-  return (
-    top >= window.pageYOffset &&
-    left >= window.pageXOffset &&
-    top + height <= window.pageYOffset + window.innerHeight &&
-    left + width <= window.pageXOffset + window.innerWidth
-  );
 };
 
 app.AnimatedNumbersBuilder = function () {

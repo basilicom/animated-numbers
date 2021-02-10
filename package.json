@@ -3,13 +3,10 @@
   "version": "1.0.0",
   "description": "A lean, zero-dependency package for displaying animated numbers",
   "main": "index.js",
-  "dependencies": {
-    "@babel/polyfill": "^7.12.1"
-  },
-  "devDependencies": {
-  },
+  "dependencies": {},
+  "devDependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",

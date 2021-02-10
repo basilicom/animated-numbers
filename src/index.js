@@ -1,20 +1,19 @@
 "use strict";
 
 window.app = window.app ? window.app : {};
-let app = window.app; // custom events
+var app = window.app; // custom events
 
 app.events = {};
 app.events.inviewport = new CustomEvent("inviewport");
 app.openanimations = true;
 app.openanigraphs = true;
-app.aninums = {};
+app.aninums = {}; // establish whether the element is within the current viewport
 
-// establish whether the element is within the current viewport
 app.elementInViewport = function (el) {
-  let top = el.offsetTop;
-  let left = el.offsetLeft;
-  const width = el.offsetWidth;
-  const height = el.offsetHeight;
+  var top = el.offsetTop;
+  var left = el.offsetLeft;
+  var width = el.offsetWidth;
+  var height = el.offsetHeight;
 
   while (el.offsetParent) {
     el = el.offsetParent;
@@ -34,8 +33,8 @@ app.elementInViewport = function (el) {
 
 app.AnimatedNumbersBuilder = function () {
   // animation logic
-  let animateNumber = id => {
-    const numelem = document
+  var animateNumber = function animateNumber(id) {
+    var numelem = document
       .getElementById(id)
       .querySelector(".animated-number_number_nr");
     app.aninums[id].interval = window.setInterval(function () {
@@ -52,20 +51,18 @@ app.AnimatedNumbersBuilder = function () {
         app.aninums[id].isInViewport = true;
       }
     }, app.aninums[id].delay);
-  };
+  }; // animation delay
 
-  // animation delay
-  let animationProps = aninum => {
-    const numelem = aninum.querySelector(".animated-number_number_nr");
-    const regex = /[.,\s]/g;
-    let maxnum = numelem.innerHTML.replace(regex, "");
+  var animationProps = function animationProps(aninum) {
+    var numelem = aninum.querySelector(".animated-number_number_nr");
+    var regex = /[.,\s]/g;
+    var maxnum = numelem.innerHTML.replace(regex, "");
     maxnum = parseInt(maxnum, 10);
-    let negnum = 1;
-    let delay = 20;
-    let step = 1;
+    var negnum = 1;
+    var delay = 20;
+    var step = 1;
 
     if (maxnum !== 0) {
-
       if (maxnum < 0) {
         maxnum = maxnum * -1;
         negnum = -1;
@@ -79,20 +76,23 @@ app.AnimatedNumbersBuilder = function () {
         step = 1;
       }
 
-      return {step, delay, maxnum, negnum};
+      return {
+        step: step,
+        delay: delay,
+        maxnum: maxnum,
+        negnum: negnum
+      };
     }
-  }
+  };
 
-  let arr = document.querySelectorAll(".animated-number");
-  arr.forEach((aninum, index) => {
-    const numelem = aninum.querySelector(".animated-number_number_nr");
+  var arr = document.querySelectorAll(".animated-number");
+  arr.forEach(function (aninum, index) {
+    var numelem = aninum.querySelector(".animated-number_number_nr"); // assign an id to aninum if it has none
 
-    // assign an id to aninum if it has none
     if (aninum.id === "" || undefined) {
       aninum.id = "aninum_" + index;
-    }
+    } // populate aninum with animation properties
 
-    // populate aninum with animation properties
     app.aninums[aninum.id] = {
       interval: null,
       delay: animationProps(aninum).delay,
@@ -101,19 +101,16 @@ app.AnimatedNumbersBuilder = function () {
       maxnum: animationProps(aninum).maxnum,
       negnum: animationProps(aninum).negnum,
       isInViewport: false
-    };
+    }; // set animated number to 0 and count up
 
-    // set animated number to 0 and count up
-    numelem.innerHTML = "0";
-
-    // perform animation if the aninum is within
+    numelem.innerHTML = "0"; // perform animation if the aninum is within
     // the viewport on initial page load
+
     if (app.elementInViewport(aninum)) {
       animateNumber(aninum.id);
-    }
-
-    // custom event definition
+    } // custom event definition
     // if the aninum appears within the viewport
+
     aninum.addEventListener("inviewport", function () {
       animateNumber(aninum.id);
     });
@@ -121,19 +118,19 @@ app.AnimatedNumbersBuilder = function () {
 };
 
 app.WindowScrollBinder = function () {
-  const aniNumsInDoc = document.querySelectorAll(".animated-number").length > 0;
+  var aniNumsInDoc = document.querySelectorAll(".animated-number").length > 0;
   window.aniNumsInDoc = aniNumsInDoc;
 
   window.onscroll = function (e) {
     if (aniNumsInDoc) {
       app.openanimations = false;
-      let arr = document.querySelectorAll(".animated-number");
-      arr.forEach((aninum) => {
+      var arr = document.querySelectorAll(".animated-number");
+      arr.forEach(function (aninum) {
         if (app.aninums[aninum.id].interval === null) {
           app.openanimations = true;
 
           if (app.elementInViewport(aninum)) {
-          // dispatch the given aninum's custom event
+            // dispatch the given aninum's custom event
             aninum.dispatchEvent(app.events.inviewport);
           }
         }

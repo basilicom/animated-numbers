@@ -1,7 +1,7 @@
 {
   "name": "animated-numbers",
   "version": "1.0.0",
-  "description": "A lean, zero-dependency package for displaying animated numbers",
+  "description": "A lean package for displaying animated numbers",
   "main": "index.js",
   "dependencies": {},
   "devDependencies": {},

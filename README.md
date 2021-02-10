@@ -1,5 +1,5 @@
 # animated-numbers
-A lean, zero-dependency package to display animated numbers.
+A lean package to display animated numbers.
 
 ## Usage
 

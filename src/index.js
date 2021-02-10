@@ -129,10 +129,3 @@ app.WindowScrollBinder = function () {
     }
   };
 };
-
-document.addEventListener("DOMContentLoaded", () => {
-  app.WindowScrollBinder();
-  app.AnimatedNumbersBuilder();
-});
-
-// module.exports = {};

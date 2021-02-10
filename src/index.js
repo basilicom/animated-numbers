@@ -1,3 +1,5 @@
+var babel = require("@babel/core");
+
 export default () => {
   window.app = window.app ? window.app : {};
   let app = window.app;

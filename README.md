@@ -23,5 +23,5 @@ This package is ES2015 compatible, hence it is possible to include it directly v
 
 Or, if you plan on using it together with a compiler, import it via:
 
-`ìmport animatedNumbers from 'animated-numbers'`
+`import animatedNumbers from 'animated-numbers'`
 

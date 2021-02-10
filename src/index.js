@@ -118,7 +118,7 @@ app.AnimatedNumbersBuilder = function () {
       animateNumber(aninum.id);
     });
   });
-}; // Window Scroll
+};
 
 app.WindowScrollBinder = function () {
   const aniNumsInDoc = document.querySelectorAll(".animated-number").length > 0;

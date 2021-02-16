@@ -49,7 +49,7 @@ document.addEventListener("DOMContentLoaded", () => {
           app.aninums[id].isInViewport = true;
         }
       }, app.aninums[id].delay);
-    }; // animation delay
+    };
 
     let animationProps = function animationProps(aninum) {
       let numelem = aninum.querySelector(".animated-number_number_nr");
@@ -85,13 +85,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let arr = document.querySelectorAll(".animated-number");
     arr.forEach(function (aninum, index) {
+
       // assign an id to aninum if it has none
       let numelem = aninum.querySelector(".animated-number_number_nr");
 
       if (aninum.id === "" || undefined) {
         aninum.id = "aninum_" + index;
-      } // populate aninum with animation properties
+      }
 
+      // populate aninum with animation properties
       app.aninums[aninum.id] = {
         interval: null,
         delay: animationProps(aninum).delay,
@@ -100,16 +102,18 @@ document.addEventListener("DOMContentLoaded", () => {
         maxnum: animationProps(aninum).maxnum,
         negnum: animationProps(aninum).negnum,
         isInViewport: false
-      }; // set animated number to 0 and count up
+      };
 
-      numelem.innerHTML = "0"; // perform animation if the aninum is within
+      // set animated number to 0 and count up
+      numelem.innerHTML = "0";
+
+      // perform animation if the aninum is within
       // the viewport on initial page load
-
       if (app.elementIsInViewport(aninum)) {
         animateNumber(aninum.id);
-      } // custom event definition
-      // if the aninum appears within the viewport
+      }
 
+      // custom event definition
       aninum.addEventListener("inviewport", function () {
         animateNumber(aninum.id);
       });

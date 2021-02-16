@@ -17,11 +17,10 @@ npm install animated-numbers --save
 
 ## Usage
 
-First import the default binding and initialize it:
+First import the package:
 
 ```javascript
-import initAnimatedNumbers from 'animated-numbers'
-initAnimatedNumbers();
+import 'animated-numbers';
 ```
 Secondly, including the following HTML snippet where you intend to animate numbers:
 ```html
@@ -30,7 +29,7 @@ Secondly, including the following HTML snippet where you intend to animate numbe
         <span class="animated-number_number_nr">100</span>
         <span class="animated-number_number_unit">%</span>
     </div>
-    <div class="animated-number_text">This is the text</div>
+    <div class="animated-number_text">lorem ipsum</div>
 </div>
 ```
 

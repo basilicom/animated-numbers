@@ -1,6 +1,6 @@
 {
   "name": "animated-numbers",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A lean package for displaying animated numbers",
   "devDependencies": {
     "@babel/core": "^7.12.13",

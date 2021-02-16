@@ -17,7 +17,7 @@ npm install animated-numbers --save
 
 ## Usage
 
-###Javascript
+### Javascript
 First, import the package:
 
 ```javascript
@@ -29,7 +29,7 @@ If you prefer to import the package via the `<script>` tag, that is also possibl
 <script type="text/javascript" src="../dist/animated-numbers.js"></script>
 ```
 
-###HTML
+### HTML
 
 Secondly, include the following HTML snippet where you intend to animate numbers:
 ```html

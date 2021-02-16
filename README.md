@@ -17,12 +17,21 @@ npm install animated-numbers --save
 
 ## Usage
 
-First import the package:
+###Javascript
+First, import the package:
 
 ```javascript
 import 'animated-numbers';
 ```
-Secondly, including the following HTML snippet where you intend to animate numbers:
+
+If you prefer to import the package via the `<script>` tag, that is also possible:
+ ```html
+<script type="text/javascript" src="../dist/animated-numbers.js"></script>
+```
+
+###HTML
+
+Secondly, include the following HTML snippet where you intend to animate numbers:
 ```html
 <div class="animated-number">
     <div class="animated-number_number">

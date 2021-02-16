@@ -1,15 +1,13 @@
-export default function () {
-
+document.addEventListener("DOMContentLoaded", () => {
   window.app = window.app ? window.app : {};
-  let app = window.app; // custom events
+  let app = window.app;
 
-  app.events = {};
+  app.events = app.events ? app.events : {};
   app.events.inviewport = new CustomEvent("inviewport");
   app.openanimations = true;
-  app.openanigraphs = true;
-  app.aninums = {}; // establish whether the element is within the current viewport
+  app.aninums = {};
 
-  app.elementInViewport = function (el) {
+  app.elementIsInViewport = function (el) {
     let top = el.offsetTop;
     let left = el.offsetLeft;
     let width = el.offsetWidth;
@@ -87,7 +85,8 @@ export default function () {
 
     let arr = document.querySelectorAll(".animated-number");
     arr.forEach(function (aninum, index) {
-      let numelem = aninum.querySelector(".animated-number_number_nr"); // assign an id to aninum if it has none
+      // assign an id to aninum if it has none
+      let numelem = aninum.querySelector(".animated-number_number_nr");
 
       if (aninum.id === "" || undefined) {
         aninum.id = "aninum_" + index;
@@ -106,7 +105,7 @@ export default function () {
       numelem.innerHTML = "0"; // perform animation if the aninum is within
       // the viewport on initial page load
 
-      if (app.elementInViewport(aninum)) {
+      if (app.elementIsInViewport(aninum)) {
         animateNumber(aninum.id);
       } // custom event definition
       // if the aninum appears within the viewport
@@ -129,7 +128,7 @@ export default function () {
           if (app.aninums[aninum.id].interval === null) {
             app.openanimations = true;
 
-            if (app.elementInViewport(aninum)) {
+            if (app.elementIsInViewport(aninum)) {
               // dispatch the given aninum's custom event
               aninum.dispatchEvent(app.events.inviewport);
             }
@@ -137,7 +136,8 @@ export default function () {
         });
       }
     };
+    app.AnimatedNumbersBuilder();
   };
+
   app.WindowScrollBinder();
-  app.AnimatedNumbersBuilder();
-}
+});

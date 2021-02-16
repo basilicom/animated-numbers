@@ -35,3 +35,4 @@ node_modules/
 .env.test
 
 .idea/
+.DS_Store

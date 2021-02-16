@@ -11,7 +11,7 @@ You can install the package via yarn or npm:
 ```bash
 yarn add animated-numbers
 ```
-```
+```bash
 npm install animated-numbers --save
 ```
 

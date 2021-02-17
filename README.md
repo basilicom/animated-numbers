@@ -42,3 +42,7 @@ Secondly, include the following HTML snippet where you intend to animate numbers
 </div>
 ```
 
+
+## Compile source
+
+Run `npm run build` to compile source code.

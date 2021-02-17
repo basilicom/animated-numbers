@@ -1,6 +1,6 @@
 {
   "name": "animated-numbers",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "A lean package for displaying animated numbers",
   "devDependencies": {
     "@babel/core": "^7.12.13",
@@ -21,8 +21,8 @@
   "module": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack",
-    "start-server": "webpack && webpack-dev-server --config webpack.config.js"
+    "build": "webpack --watch",
+    "start-server": "webpack-dev-server --config webpack.config.js && webpack --watch"
   },
   "repository": {
     "type": "git",

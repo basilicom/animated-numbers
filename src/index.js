@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
   window.app = window.app ? window.app : {};
   let app = window.app;
+  let notFoundError = 'Error: could not find item to animate!';
 
   app.events = app.events ? app.events : {};
   app.events.inviewport = new CustomEvent("inviewport");
@@ -30,56 +31,70 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   app.AnimatedNumbersBuilder = function () {
+
     // animation logic
     let animateNumber = function animateNumber(id) {
       let numelem = document
         .getElementById(id)
         .querySelector(".animated-number_number_nr");
-      app.aninums[id].interval = window.setInterval(function () {
-        if (app.aninums[id].actnum < app.aninums[id].maxnum) {
-          app.aninums[id].actnum = app.aninums[id].actnum + app.aninums[id].step;
-          numelem.innerHTML = (app.aninums[id].actnum * app.aninums[id].negnum)
-            .toString()
-            .replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-        } else {
-          numelem.innerHTML = (app.aninums[id].maxnum * app.aninums[id].negnum)
-            .toString()
-            .replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-          window.clearInterval(app.aninums[id].interval);
-          app.aninums[id].isInViewport = true;
-        }
-      }, app.aninums[id].delay);
+
+      if (numelem) {
+        app.aninums[id].interval = window.setInterval(function () {
+          if (app.aninums[id].actnum < app.aninums[id].maxnum) {
+            app.aninums[id].actnum = app.aninums[id].actnum + app.aninums[id].step;
+            numelem.innerHTML = (app.aninums[id].actnum * app.aninums[id].negnum)
+              .toString()
+              .replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+          }
+          else {
+            numelem.innerHTML = (app.aninums[id].maxnum * app.aninums[id].negnum)
+              .toString()
+              .replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+            window.clearInterval(app.aninums[id].interval);
+            app.aninums[id].isInViewport = true;
+          }
+
+        }, app.aninums[id].delay);
+      } else {
+        console.error(notFoundError);
+      }
     };
 
     let animationProps = function animationProps(aninum) {
       let numelem = aninum.querySelector(".animated-number_number_nr");
-      let regex = /[.,\s]/g;
-      let maxnum = numelem.innerHTML.replace(regex, "");
-      maxnum = parseInt(maxnum, 10);
-      let negnum = 1;
-      let delay = 20;
-      let step = 1;
+      let regex, maxnum, negnum, delay, step;
 
-      if (maxnum !== 0) {
-        if (maxnum < 0) {
-          maxnum = maxnum * -1;
-          negnum = -1;
+      if (numelem) {
+        regex = /[.,\s]/g;
+        maxnum = numelem.innerHTML.replace(regex, "");
+        maxnum = parseInt(maxnum, 10);
+        negnum = 1;
+        delay = 20;
+        step = 1;
+
+        if (maxnum !== 0) {
+          if (maxnum < 0) {
+            maxnum = maxnum * -1;
+            negnum = -1;
+          }
+
+          if (1000 / maxnum < 20) {
+            delay = 20;
+            step = parseInt(20 / (1000 / maxnum), 10);
+          } else {
+            delay = 1000 / maxnum;
+            step = 1;
+          }
+
+          return {
+            step: step,
+            delay: delay,
+            maxnum: maxnum,
+            negnum: negnum
+          };
         }
-
-        if (1000 / maxnum < 20) {
-          delay = 20;
-          step = parseInt(20 / (1000 / maxnum), 10);
-        } else {
-          delay = 1000 / maxnum;
-          step = 1;
-        }
-
-        return {
-          step: step,
-          delay: delay,
-          maxnum: maxnum,
-          negnum: negnum
-        };
+      } else {
+        console.error(notFoundError);
       }
     };
 
@@ -89,34 +104,39 @@ document.addEventListener("DOMContentLoaded", () => {
       // assign an id to aninum if it has none
       let numelem = aninum.querySelector(".animated-number_number_nr");
 
-      if (aninum.id === "" || undefined) {
-        aninum.id = "aninum_" + index;
+      if (numelem) {
+        if (aninum.id === "" || undefined) {
+          aninum.id = "aninum_" + index;
+        }
+
+        // populate aninum with animation properties
+        app.aninums[aninum.id] = {
+          interval: null,
+          delay: animationProps(aninum).delay,
+          step: animationProps(aninum).step,
+          actnum: 0,
+          maxnum: animationProps(aninum).maxnum,
+          negnum: animationProps(aninum).negnum,
+          isInViewport: false
+        };
+
+        // set animated number to 0 and count up
+        numelem.innerHTML = "0";
+
+        // perform animation if the aninum is within
+        // the viewport on initial page load
+        if (app.elementIsInViewport(aninum)) {
+          animateNumber(aninum.id);
+        }
+
+        // custom event definition
+        aninum.addEventListener("inviewport", function () {
+          animateNumber(aninum.id);
+        });
       }
-
-      // populate aninum with animation properties
-      app.aninums[aninum.id] = {
-        interval: null,
-        delay: animationProps(aninum).delay,
-        step: animationProps(aninum).step,
-        actnum: 0,
-        maxnum: animationProps(aninum).maxnum,
-        negnum: animationProps(aninum).negnum,
-        isInViewport: false
-      };
-
-      // set animated number to 0 and count up
-      numelem.innerHTML = "0";
-
-      // perform animation if the aninum is within
-      // the viewport on initial page load
-      if (app.elementIsInViewport(aninum)) {
-        animateNumber(aninum.id);
+      else {
+        console.error(notFoundError);
       }
-
-      // custom event definition
-      aninum.addEventListener("inviewport", function () {
-        animateNumber(aninum.id);
-      });
     });
   };
 

@@ -162,6 +162,5 @@ document.addEventListener("DOMContentLoaded", () => {
     };
     app.AnimatedNumbersBuilder();
   };
-
   app.WindowScrollBinder();
 });

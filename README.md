@@ -18,7 +18,7 @@ npm install animated-numbers --save
 ## Usage
 
 ### Javascript
-First, import the package:
+Import the package:
 
 ```javascript
 import 'animated-numbers';
@@ -31,7 +31,7 @@ If you prefer to import the package via the `<script>` tag, that is also possibl
 
 ### HTML
 
-Secondly, include the following HTML snippet where you intend to animate numbers:
+Include the following HTML snippet where you intend to animate numbers:
 ```html
 <div class="animated-number">
     <div class="animated-number_number">
@@ -45,4 +45,5 @@ Secondly, include the following HTML snippet where you intend to animate numbers
 
 ## Compile source
 
-Run `npm run build` to compile source code.
+- Run `npm run build` to compile source code. 
+- To start the dev server, run `npm start dev-server`

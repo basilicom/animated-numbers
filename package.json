@@ -21,8 +21,9 @@
   "module": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack --watch",
-    "start-server": "webpack-dev-server --config webpack.config.js && webpack --watch"
+    "build": "webpack",
+    "start-server": "webpack-dev-server --config webpack.config.js && webpack --watch",
+    "clean": "yarn autoclean --force"
   },
   "repository": {
     "type": "git",

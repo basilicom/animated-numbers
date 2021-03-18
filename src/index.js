@@ -32,41 +32,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
   app.AnimatedNumbersBuilder = function () {
 
-    // animation logic
-    let animateNumber = function animateNumber(id) {
-      let numelem = document
-        .getElementById(id)
-        .querySelector(".animated-number_number_nr");
 
-      if (numelem) {
-        app.aninums[id].interval = window.setInterval(function () {
-          if (app.aninums[id].actnum < app.aninums[id].maxnum) {
-            app.aninums[id].actnum = app.aninums[id].actnum + app.aninums[id].step;
-            numelem.innerHTML = (app.aninums[id].actnum * app.aninums[id].negnum)
-              .toString()
-              .replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-          }
-          else {
-            numelem.innerHTML = (app.aninums[id].maxnum * app.aninums[id].negnum)
-              .toString()
-              .replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-            window.clearInterval(app.aninums[id].interval);
-            app.aninums[id].isInViewport = true;
-          }
-
-        }, app.aninums[id].delay);
-      } else {
-        console.error(notFoundError);
-      }
-    };
-
-    let animationProps = function animationProps(aninum) {
+    const animationProps = function animationProps(aninum) {
       let numelem = aninum.querySelector(".animated-number_number_nr");
       let regex, maxnum, negnum, delay, step;
 
       if (numelem) {
+
+        // save position of comma, if there is one
+        let posOfComma = numelem.innerHTML.indexOf(',');
+
         regex = /[.,\s]/g;
         maxnum = numelem.innerHTML.replace(regex, "");
+
         maxnum = parseInt(maxnum, 10);
         negnum = 1;
         delay = 20;
@@ -90,7 +68,7 @@ document.addEventListener("DOMContentLoaded", () => {
             step: step,
             delay: delay,
             maxnum: maxnum,
-            negnum: negnum
+            negnum: negnum,
           };
         }
       } else {
@@ -98,7 +76,40 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     };
 
-    let arr = document.querySelectorAll(".animated-number");
+    // animation logic
+    const animateNumber = function animateNumber(id) {
+      let numelem = document
+        .getElementById(id)
+        .querySelector(".animated-number_number_nr");
+
+      if (numelem) {
+        app.aninums[id].interval = window.setInterval(function () {
+          // ascending numbers, e.g. if number is positive
+          if (app.aninums[id].actnum < app.aninums[id].maxnum) {
+            app.aninums[id].actnum = app.aninums[id].actnum + app.aninums[id].step;
+            numelem.innerHTML = (app.aninums[id].actnum * app.aninums[id].negnum)
+              .toString()
+              // add a dot every three digitls
+              .replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+              //TODO account for decimal precision
+          }
+          // descending numbers, e.g. if number is negative
+          else {
+            numelem.innerHTML = (app.aninums[id].maxnum * app.aninums[id].negnum)
+              .toString()
+              // add a dot every three digitls
+              .replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+            window.clearInterval(app.aninums[id].interval);
+            app.aninums[id].isInViewport = true;
+          }
+        }, app.aninums[id].delay);
+      } else {
+        console.error(notFoundError);
+      }
+    };
+
+    // DOM logic
+    const arr = document.querySelectorAll(".animated-number");
     arr.forEach(function (aninum, index) {
 
       // assign an id to aninum if it has none

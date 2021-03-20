@@ -46,4 +46,4 @@ Include the following HTML snippet where you intend to animate numbers:
 ## Compile source
 
 - Run `npm run build` to compile source code. 
-- To start the dev server, run `npm start dev-server`
+- To start the dev server, run `npm run dev-server`

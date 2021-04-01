@@ -1,4 +1,4 @@
-import {insertAt} from "./helpers";
+import { notFoundError, insertAt} from "./helpers";
 
 export const animatedNumbersBuilder = () => {
 
@@ -8,8 +8,11 @@ export const animatedNumbersBuilder = () => {
 
     if (numelem) {
 
+      // zero-basing
+      const totalNumLength = numelem.innerHTML.length -1;
       // save position of comma, if there is one
-      const posOfComma = numelem.innerHTML.indexOf(',') > 0 ? numelem.innerHTML.indexOf(',') : null;
+      const commaPos = numelem.innerHTML.indexOf(',') > 0 ? numelem.innerHTML.indexOf(',') : 0;
+      const decimalPrecision = totalNumLength - commaPos;
 
       regex = /[.,\s]/g;
       maxnum = numelem.innerHTML.replace(regex, "");
@@ -38,7 +41,7 @@ export const animatedNumbersBuilder = () => {
           delay: delay,
           maxnum: maxnum,
           negnum: negnum,
-          posOfComma: posOfComma
+          decimalPrecision: decimalPrecision
         };
       }
     } else {
@@ -59,14 +62,12 @@ export const animatedNumbersBuilder = () => {
         if (app.aninums[id].actnum < app.aninums[id].maxnum) {
           app.aninums[id].actnum = app.aninums[id].actnum + app.aninums[id].step;
           numelem.innerHTML = (app.aninums[id].actnum * app.aninums[id].negnum);
-          // account for decimal precision
-          numelem.innerHTML = insertAt(numelem.innerHTML, ',', app.aninums[id].posOfComma);
+          numelem.innerHTML = insertAt(numelem.innerHTML, ',', app.aninums[id].decimalPrecision);
         }
         // when done animating the number
         else {
           numelem.innerHTML = (app.aninums[id].maxnum * app.aninums[id].negnum);
-          // account for decimal precision
-          numelem.innerHTML = insertAt(numelem.innerHTML, ',', app.aninums[id].posOfComma);
+          numelem.innerHTML = insertAt(numelem.innerHTML, ',', app.aninums[id].decimalPrecision);
 
           window.clearInterval(app.aninums[id].interval);
           app.aninums[id].isInViewport = true;
@@ -97,7 +98,7 @@ export const animatedNumbersBuilder = () => {
         actnum: 0,
         maxnum: animationProps(aninum).maxnum,
         negnum: animationProps(aninum).negnum,
-        posOfComma: animationProps(aninum).posOfComma,
+        decimalPrecision: animationProps(aninum).decimalPrecision,
         isInViewport: false
       };
 

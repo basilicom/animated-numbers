@@ -58,19 +58,13 @@ export const animatedNumbersBuilder = () => {
         // while number is animating
         if (app.aninums[id].actnum < app.aninums[id].maxnum) {
           app.aninums[id].actnum = app.aninums[id].actnum + app.aninums[id].step;
-          numelem.innerHTML = (app.aninums[id].actnum * app.aninums[id].negnum)
-            .toString()
-            // add a dot every three digitls
-            .replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+          numelem.innerHTML = (app.aninums[id].actnum * app.aninums[id].negnum);
           // account for decimal precision
           numelem.innerHTML = insertAt(numelem.innerHTML, ',', app.aninums[id].posOfComma);
         }
         // when done animating the number
         else {
-          numelem.innerHTML = (app.aninums[id].maxnum * app.aninums[id].negnum)
-            .toString()
-            // add a dot every three digitls
-            .replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+          numelem.innerHTML = (app.aninums[id].maxnum * app.aninums[id].negnum);
           // account for decimal precision
           numelem.innerHTML = insertAt(numelem.innerHTML, ',', app.aninums[id].posOfComma);
 

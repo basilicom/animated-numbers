@@ -24,7 +24,7 @@ Import the package:
 import 'animated-numbers';
 ```
 
-If you prefer to import the package via the `<script>` tag, that is also possible:
+You can also import the compiled code for standalone use via the `<script>` tag: 
  ```html
 <script type="text/javascript" src="../dist/animated-numbers.js"></script>
 ```
@@ -45,5 +45,5 @@ Include the following HTML snippet where you intend to animate numbers:
 
 ## Compile source
 
-- Run `npm run build` to compile source code. 
-- To start the dev server, run `npm run dev-server`
+- Run `npm run build` to compile source code for a one-time build. 
+- Or, start an HMR-supporting development server via `npm run dev-server`

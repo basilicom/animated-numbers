@@ -11,8 +11,9 @@ export const animatedNumbersBuilder = () => {
       // zero-basing
       const totalNumLength = numelem.innerHTML.length -1;
       // save position of comma, if there is one
-      const commaPos = numelem.innerHTML.indexOf(',') > 0 ? numelem.innerHTML.indexOf(',') : 0;
-      const decimalPrecision = totalNumLength - commaPos;
+      const hasComma = numelem.innerHTML.indexOf(',') > 0;
+      const commaPos = hasComma ? numelem.innerHTML.indexOf(',') : false;
+      const decimalPrecision = commaPos ? totalNumLength - commaPos : 0;
 
       regex = /[.,\s]/g;
       maxnum = numelem.innerHTML.replace(regex, "");

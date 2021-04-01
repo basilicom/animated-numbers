@@ -10,14 +10,8 @@ export const insertAt = (str, sub, dec) => {
 
   let string = str.toString();
 
-  // if a decimal separator is present
-  //  and the position of the comma suceeds dots
-  // if so, add a dot every three digits
-  if (dec > 3) {
-    string = string.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-  }
   // add a comma only if it is present in the original number
-  if (dec > 0 && dec < str.length-1) {
+  if (dec > 0) {
     // if string is empty, append a 0
     let preCommaString = string.slice(0, string.length-dec);
     if (preCommaString === '') {
@@ -26,7 +20,11 @@ export const insertAt = (str, sub, dec) => {
 
     return `${preCommaString}${sub}${string.slice(string.length-dec)}`;
   }
-  return `${string.slice(0, dec)}${string.slice(dec)}`;
+  // if no comma is present in the original number
+  else {
+    string = `${string.slice(0, dec)}${string.slice(dec)}`;
+    return string.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+  }
 }
 
 export const elementIsInViewport = (el) => {

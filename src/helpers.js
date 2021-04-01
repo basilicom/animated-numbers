@@ -17,7 +17,6 @@ export const insertAt = (str, sub, dec) => {
     if (preCommaString === '') {
       preCommaString = 0;
     }
-    console.log('position of comma', dec);
     return `${preCommaString}${sub}${string.slice(string.length-dec)}`;
   }
   // if no comma is present in the original number

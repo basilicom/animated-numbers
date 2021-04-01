@@ -8,6 +8,7 @@ export const animatedNumbersBuilder = () => {
 
     if (numelem) {
 
+      numelem.innerHTML = numelem.innerHTML.toString().trim();
       // zero-basing
       const totalNumLength = numelem.innerHTML.length -1;
       // save position of comma, if there is one

@@ -18,8 +18,7 @@ export const insertAt = (str, sub, dec) => {
   }
   // if no decimal precision in the original number
   else if (dec === 0) {
-    string.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-    return string;
+    return string.replace(/\B(?=(\d{3})+(?!\d))/g,".");
   }
 }
 

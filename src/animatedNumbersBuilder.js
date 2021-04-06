@@ -13,8 +13,8 @@ export const animatedNumbersBuilder = () => {
       const totalNumLength = numelem.innerHTML.length -1;
       // save position of comma, if there is one
       const hasComma = numelem.innerHTML.indexOf(',') > 0;
-      const commaPos = hasComma ? numelem.innerHTML.indexOf(',') : false;
-      const decimalPrecision = commaPos ? totalNumLength - commaPos : 0;
+      const commaPos = hasComma ? numelem.innerHTML.indexOf(',') : -1;
+      const decimalPrecision = commaPos > -1 ? totalNumLength - commaPos : 0;
 
       regex = /[.,\s]/g;
       maxnum = numelem.innerHTML.replace(regex, "");
@@ -32,7 +32,7 @@ export const animatedNumbersBuilder = () => {
 
         if (1000 / maxnum < 20) {
           delay = 20;
-          step = parseInt(10 / (1000 / maxnum), 10);
+          step = parseInt(20 / (1000 / maxnum), 10);
         } else {
           delay = 1000 / maxnum;
           step = 1;
@@ -57,27 +57,26 @@ export const animatedNumbersBuilder = () => {
       .getElementById(id)
       .querySelector(".animated-number_number_nr");
 
-    if (numelem) {
-      app.aninums[id].interval = window.setInterval(function () {
-
-        // while number is animating
-        if (app.aninums[id].actnum < app.aninums[id].maxnum) {
-          app.aninums[id].actnum = app.aninums[id].actnum + app.aninums[id].step;
-          numelem.innerHTML = (app.aninums[id].actnum * app.aninums[id].negnum);
-          numelem.innerHTML = insertAt(numelem.innerHTML, ',', app.aninums[id].decimalPrecision);
-        }
-        // when done animating the number
-        else {
-          numelem.innerHTML = (app.aninums[id].maxnum * app.aninums[id].negnum);
-          numelem.innerHTML = insertAt(numelem.innerHTML, ',', app.aninums[id].decimalPrecision);
-
-          window.clearInterval(app.aninums[id].interval);
-          app.aninums[id].isInViewport = true;
-        }
-      }, app.aninums[id].delay);
-    } else {
+    if (!numelem) {
       console.error(notFoundError);
+      return false;
     }
+    app.aninums[id].interval = window.setInterval(function () {
+
+      // while number is animating
+      if (app.aninums[id].actnum < app.aninums[id].maxnum) {
+        app.aninums[id].actnum = app.aninums[id].actnum + app.aninums[id].step;
+        numelem.innerHTML = (app.aninums[id].actnum * app.aninums[id].negnum);
+        numelem.innerHTML = insertAt(numelem.innerHTML, ',', app.aninums[id].decimalPrecision);
+      }
+      // when done animating the number
+      else {
+        numelem.innerHTML = (app.aninums[id].maxnum * app.aninums[id].negnum);
+        numelem.innerHTML = insertAt(numelem.innerHTML, ',', app.aninums[id].decimalPrecision);
+        window.clearInterval(app.aninums[id].interval);
+        app.aninums[id].isInViewport = true;
+      }
+    }, app.aninums[id].delay);
   };
 
   // DOM logic
